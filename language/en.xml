@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language languagecode="en"
+	xmlns="https://www.woltlab.com"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.woltlab.com https://www.woltlab.com/XSD/5.4/language.xsd">
+	<category name="wcf.acp.group">
+		<item name="wcf.acp.group.option.user.conversation.canStartPublicPoll"><![CDATA[Can start polls]]></item>
+		<item name="wcf.acp.group.option.user.conversation.canVotePoll"><![CDATA[Can take polls]]></item>
+	</category>
+</language>

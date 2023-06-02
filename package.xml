@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package name="de.xxschrandxx.wsc.conversation-poll"
+	xmlns="https://www.woltlab.com"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.woltlab.com https://www.woltlab.com/XSD/5.4/package.xsd">
+	<packageinformation>
+		<packagename><![CDATA[Conversation Poll]]></packagename>
+		<packagename language="de"><![CDATA[Konversationen Umfragen]]></packagename>
+		<packagedescription><![CDATA[Enables polls in the Conversations.]]></packagedescription>
+		<packagedescription language="de"><![CDATA[Aktiviert Umfragen in Konversationen.]]></packagedescription>
+		<version>1.0.0</version>
+		<date>2023-03-08</date>
+	</packageinformation>
+
+	<authorinformation>
+		<author><![CDATA[xXSchrandXx]]></author>
+	</authorinformation>
+
+	<requiredpackages>
+		<requiredpackage minversion="5.5.0">com.woltlab.wcf</requiredpackage>
+		<requiredpackage minversion="5.5.0">com.woltlab.wcf.conversation</requiredpackage>
+	</requiredpackages>
+
+	<excludedpackages>
+		<excludedpackage version="6.0.0 Alpha 1">com.woltlab.wcf</excludedpackage>
+		<requiredpackage minversion="6.0.0 Alpha 1">com.woltlab.wcf.conversation</requiredpackage>
+	</excludedpackages>
+
+	<instructions type="install">
+		<instruction type="file"/>
+		<instruction type="template"/>
+		<instruction type="language"/>
+		<instruction type="eventListener"/>
+		<instruction type="templateListener"/>
+		<instruction type="userGroupOption"/>
+		<instruction type="objectType"/>
+		<instruction type="database">acp/database/install_de.xxschrandxx.wsc.conversation-poll.php</instruction>
+	</instructions>
+</package>
