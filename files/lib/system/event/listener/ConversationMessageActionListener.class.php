@@ -85,10 +85,9 @@ class ConversationMessageActionListener implements IParameterizedEventListener
     {
         foreach($eventObj->getObjects() as $messageEditor) {
             $pollManager = PollManager::getInstance();
-            $pollManager->readFormParameters($_POST['parameters']['poll']);
             if (isset($messageEditor->pollID)) {
                 $pollManager->setObject(ConversationPollHandler::CONVERSATION_POLL_TYPE, $messageEditor->getObjectID(), $messageEditor->pollID);
-                wcfDebug($pollManager);
+                $pollManager->readFormParameters($_POST['parameters']['poll']);
                 $pollManager->save();
             }
         }
