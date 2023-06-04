@@ -1,8 +1,7 @@
 <?php
 
-namespace wcf\data\task\date;
+namespace wcf\data\conversation\message;
 
-use wcf\data\conversation\message\ConversationMessage;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IPollObject;
 use wcf\system\poll\ConversationPollHandler;

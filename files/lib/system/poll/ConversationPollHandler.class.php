@@ -4,6 +4,7 @@ namespace wcf\system\poll;
 
 use BadMethodCallException;
 use wcf\data\conversation\message\ConversationMessageList;
+use wcf\data\conversation\message\PollConversationMessage;
 use wcf\data\poll\Poll;
 use wcf\system\poll\AbstractPollHandler;
 use wcf\system\WCF;
@@ -45,7 +46,7 @@ class ConversationPollHandler extends AbstractPollHandler
             return;
         }
         if ($conversationMessage && $conversationMessage->pollID == $poll->pollID) {
-            return $conversationMessage;
+            return new PollConversationMessage($conversationMessage);
         }
     }
 }

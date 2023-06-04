@@ -48,6 +48,7 @@ class ConversationShowListener implements IParameterizedEventListener
 
         $messageIDToPoll = [];
         foreach ($polls as $poll) {
+            $poll->setRelatedObject(ConversationPollHandler::getInstance()->getRelatedObject($poll));
             $messageIDToPoll[$poll->objectID] = $poll;
         }
 
