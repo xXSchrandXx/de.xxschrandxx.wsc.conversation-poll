@@ -2,7 +2,9 @@
 
 namespace wcf\system\event\listener;
 
-use wcf\data\conversation\message\ConversationMessageList;
+use wcf\data\conversation\message\ConversationMessageEditor;
+use wcf\data\conversation\message\PollConversationMessage;
+use wcf\data\poll\Poll;
 use wcf\page\ConversationPage;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\poll\ConversationPollHandler;
@@ -25,31 +27,24 @@ class ConversationShowListener implements IParameterizedEventListener
         $pollManager->setObject(ConversationPollHandler::CONVERSATION_POLL_TYPE, 0);
         $pollManager->assignVariables();
 
-        /** @var ConversationMessageList */
+        /** @var \wcf\data\conversation\message\ViewableConversationMessageList */
         $conversationMessageList = $eventObj->objectList;
 
-        $pollIDs = [];
+        $messageIDToPoll = [];
         foreach ($conversationMessageList as $conversationMessage) {
             if (!isset($conversationMessage->pollID)) {
                 continue;
             }
-            array_push($pollIDs, $conversationMessage->pollID);
-        }
-
-        if (empty($pollIDs)) {
-            return;
-        }
-
-        $polls = $pollManager->getPolls($pollIDs);
-
-        if (empty($polls)) {
-            return;
-        }
-
-        $messageIDToPoll = [];
-        foreach ($polls as $poll) {
-            $poll->setRelatedObject(ConversationPollHandler::getInstance()->getRelatedObject($poll));
-            $messageIDToPoll[$poll->objectID] = $poll;
+            $poll = new Poll($conversationMessage->pollID);
+            if (!$poll->getObjectID()) {
+                $editor = new ConversationMessageEditor($conversationMessage->getDecoratedObject());
+                $editor->update([
+                    'pollID' => null
+                ]);
+                continue;
+            }
+            $poll->getOptions();
+            $poll->setRelatedObject(new PollConversationMessage($conversationMessage));
         }
 
         if (empty($messageIDToPoll)) {

@@ -6,6 +6,9 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IPollObject;
 use wcf\system\poll\ConversationPollHandler;
 
+/**
+ * @property-read int $pollID
+ */
 class PollConversationMessage extends DatabaseObjectDecorator implements IPollObject
 {
     protected static $baseClass = ConversationMessage::class;

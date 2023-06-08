@@ -2,8 +2,9 @@
 
 namespace wcf\system\event\listener;
 
-use wcf\data\conversation\message\PollConversationMessage;
+use wcf\data\conversation\message\ConversationMessageEditor;
 use wcf\data\poll\Poll;
+use wcf\data\poll\PollList;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\poll\ConversationPollHandler;
 use wcf\system\poll\PollManager;
@@ -43,12 +44,19 @@ class ConversationMessageActionListener implements IParameterizedEventListener
      */
     public function validateBeginEdit($eventObj)
     {
-        $pollManager = PollManager::getInstance();
-        if (isset($eventObj->message->pollID)) {
-            $pollManager->setObject(ConversationPollHandler::CONVERSATION_POLL_TYPE, $eventObj->message->messageID, $eventObj->message->pollID);
-        } else {
-            $pollManager->setObject(ConversationPollHandler::CONVERSATION_POLL_TYPE, $eventObj->message->messageID);
+        if (!isset($eventObj->message->pollID)) {
+            return;
         }
+        $poll = new Poll($eventObj->message->pollID);
+        if (!$poll->getObjectID()) {
+            $editor = new ConversationMessageEditor($eventObj->message);
+            $editor->update([
+                'pollID' => null
+            ]);
+            return;
+        }
+        $pollManager = PollManager::getInstance();
+        $pollManager->setObject(ConversationPollHandler::CONVERSATION_POLL_TYPE, $eventObj->message->messageID, $eventObj->message->pollID);
         $pollManager->assignVariables();
     }
 
