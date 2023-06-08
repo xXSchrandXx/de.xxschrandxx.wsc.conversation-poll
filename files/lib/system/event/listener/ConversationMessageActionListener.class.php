@@ -2,8 +2,8 @@
 
 namespace wcf\system\event\listener;
 
-use wcf\data\conversation\message\ConversationMessage;
-use wcf\data\conversation\message\ConversationMessageEditor;
+use wcf\data\conversation\message\PollConversationMessage;
+use wcf\data\poll\Poll;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\poll\ConversationPollHandler;
 use wcf\system\poll\PollManager;
@@ -18,6 +18,10 @@ class ConversationMessageActionListener implements IParameterizedEventListener
      */
     public function execute($eventObj, $className, $eventName, array &$parameters)
     {
+        if (!MODULE_POLL || !ConversationPollHandler::getInstance()->canStartPublicPoll()) {
+            return;
+        }
+
         $action = $eventObj->getActionName();
         if ($eventName == 'validateAction') {
             $method = 'validate'.$action;
@@ -51,18 +55,6 @@ class ConversationMessageActionListener implements IParameterizedEventListener
     /**
      * @param \wcf\data\conversation\message\ConversationMessageAction $eventObj
      */
-    public function validateQuickReply($eventObj)
-    {
-        if (ConversationPollHandler::getInstance()->canStartPublicPoll()) {
-            $pollManager = PollManager::getInstance();
-            $pollManager->readFormParameters();
-            $pollManager->validate();
-        }
-    }
-
-    /**
-     * @param \wcf\data\conversation\message\ConversationMessageAction $eventObj
-     */
     public function validateDelete($eventObj)
     {
         $pollIDs = [];
@@ -84,30 +76,13 @@ class ConversationMessageActionListener implements IParameterizedEventListener
     public function finalizeUpdate($eventObj)
     {
         foreach($eventObj->getObjects() as $messageEditor) {
-            $pollManager = PollManager::getInstance();
-            if (isset($messageEditor->pollID)) {
-                $pollManager->setObject(ConversationPollHandler::CONVERSATION_POLL_TYPE, $messageEditor->getObjectID(), $messageEditor->pollID);
-                $pollManager->readFormParameters($_POST['parameters']['poll']);
-                $pollManager->save();
+            if (!isset($messageEditor->pollID)) {
+                continue;
             }
-        }
-    }
-
-    /**
-     * @param \wcf\data\conversation\message\ConversationMessageAction $eventObj
-     */
-    public function finalizeQuickReply($eventObj)
-    {
-        $objectID = $eventObj->getReturnValues()['returnValues']['objectID'];
-        $pollManager = PollManager::getInstance();
-        $pollManager->readFormParameters($_POST['parameters']['data']['poll']);
-        $pollManager->setObject(ConversationPollHandler::CONVERSATION_POLL_TYPE, $objectID);
-        $pollID = $pollManager->save();
-        if ($pollID) {
-            $editor = new ConversationMessageEditor(new ConversationMessage($objectID));
-            $editor->update([
-                'pollID' => $pollID
-            ]);
+            $pollManager = PollManager::getInstance();
+            $pollManager->setObject(ConversationPollHandler::CONVERSATION_POLL_TYPE, $messageEditor->getObjectID(), $messageEditor->pollID);
+            $pollManager->readFormParameters($_POST['parameters']['poll']);
+            $pollManager->save();
         }
     }
 }

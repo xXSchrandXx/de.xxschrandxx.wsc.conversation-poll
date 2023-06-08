@@ -15,6 +15,10 @@ class ConversationPollAddListener implements IParameterizedEventListener
      */
     public function execute($eventObj, $className, $eventName, array &$parameters)
     {
+        if (!MODULE_POLL || !ConversationPollHandler::getInstance()->canStartPublicPoll()) {
+            return;
+        }
+
         $this->$eventName($eventObj);
     }
 
