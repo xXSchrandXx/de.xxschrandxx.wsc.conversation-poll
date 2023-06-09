@@ -28,10 +28,10 @@ export class Poll {
                 return;
             }
             messagePoll.parentElement!.remove();
-            this.handle(id, messageBody);
+            this.addNew(id, messageBody);
         });
     }
-    async handle(id: number, messageBody: HTMLElement): Promise<void> {
+    async addNew(id: number, messageBody: HTMLElement): Promise<void> {
         const response = (await Ajax.dboAction("getPoll", "wcf\\data\\conversation\\message\\PollConversationMessageAction")
           .objectIds([id])
           .dispatch()) as ResponseGetPoll;
