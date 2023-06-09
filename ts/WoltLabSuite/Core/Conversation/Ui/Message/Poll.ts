@@ -14,7 +14,6 @@ type ResponseGetPoll = {
 
 export class Poll {
     constructor(id: number) {
-        console.log(`Adding listener for autosaveDestroy_messageEditor${id}`);
         EventHandler.add("com.woltlab.wcf.redactor", `autosaveDestroy_messageEditor${id}`, () => {
             var element = document.getElementById(`message${id}`);
             if (element == null) {
@@ -25,7 +24,6 @@ export class Poll {
                 return;
             }
             var messagePoll = messageBody.querySelector(".pollContainer");
-            console.log(messagePoll);
             if (messagePoll == null) {
                 return;
             }
@@ -37,7 +35,6 @@ export class Poll {
         const response = (await Ajax.dboAction("getPoll", "wcf\\data\\conversation\\message\\PollConversationMessageAction")
           .objectIds([id])
           .dispatch()) as ResponseGetPoll;
-        console.log(response)
         if (response.pollID == null || response.template == null) {
             return;
         }
