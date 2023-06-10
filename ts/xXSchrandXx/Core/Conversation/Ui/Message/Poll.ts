@@ -1,9 +1,8 @@
 /**
- * @module WoltLabSuite/Core/Conversation/Ui/Message/Poll
+ * @module xXSchrandXx/Core/Conversation/Ui/Message/Poll
  */
 
 import * as Ajax from "WoltLabSuite/Core/Ajax";
-import { AjaxCallbackObject, AjaxCallbackSetup, ResponseData } from "WoltLabSuite/Core/Ajax/Data";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
 import DomUtil from "WoltLabSuite/Core/Dom/Util";
 
