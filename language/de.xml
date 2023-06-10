@@ -4,6 +4,6 @@
 	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.woltlab.com https://www.woltlab.com/XSD/5.4/language.xsd">
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.option.user.conversation.canStartPublicPoll"><![CDATA[Kann Umfragen starten]]></item>
-		<item name="wcf.acp.group.option.user.conversation.canVotePoll"><![CDATA[Kann an Umfragen teilnehmen]]></item>
+		<item name="wcf.acp.group.option.user.conversation.canVote"><![CDATA[Kann an Umfragen teilnehmen]]></item>
 	</category>
 </language>
