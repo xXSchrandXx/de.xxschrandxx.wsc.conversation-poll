@@ -6,14 +6,16 @@
 			<option name="user.conversation.canStartPublicPoll">
 				<categoryname>user.conversation</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
+				<defaultvalue>1</defaultvalue>
+				<options>module_poll</options>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.conversation.canVote">
 				<categoryname>user.conversation</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
+				<defaultvalue>1</defaultvalue>
+				<options>module_poll</options>
+				<usersonly>1</usersonly>
 			</option>
 		</options>
 	</import>
