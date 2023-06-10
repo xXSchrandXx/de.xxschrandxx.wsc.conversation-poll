@@ -44,7 +44,7 @@ class ConversationShowListener implements IParameterizedEventListener
                 continue;
             }
             $poll->getOptions();
-            $poll->setRelatedObject(new PollConversationMessage($conversationMessage));
+            $poll->setRelatedObject(new PollConversationMessage($conversationMessage->getDecoratedObject()));
         }
 
         if (empty($messageIDToPoll)) {
